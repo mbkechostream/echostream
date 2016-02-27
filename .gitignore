@@ -1,4 +1,5 @@
 .DS_Store
 node_modules/
+static/compiled/
 npm-debug.log
 *~

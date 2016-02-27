@@ -9,7 +9,8 @@
   },
   "dependencies": {
     "bcrypt": "^0.8.5",
-    "nodal": "0.7.9"
+    "nodal": "0.7.9",
+    "nodal-angular": "0.0.4"
   },
   "devDependencies": {
     "chai": "~3.5.0",
