@@ -19,6 +19,14 @@ app.config(function($stateProvider, $locationProvider, $urlRouterProvider) {
         }
       )
 
+      .state(
+        'root.create',
+        {
+          url: '/create',
+          templateUrl: 'pages/root/create/template.html'
+        }
+      )
+
   $urlRouterProvider.otherwise('/');
 
 });
