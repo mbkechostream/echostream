@@ -42,9 +42,14 @@ module.exports = (function() {
 
   User.setDatabase(Nodal.require('db/main.js'));
   User.setSchema(Nodal.my.Schema.models.User);
+  const Soundbite = Nodal.require('app/models/soundbite.js');
+  User.joinedBy(Soundbite, {multiple: true});
+  const Collaboration = Nodal.require('app/models/collaboration.js');
+  User.joinedBy(Collaboration, {multiple: true});
 
   User.validates('email', 'must be valid', v => v && (v + '').match(/.+@.+\.\w+/i));
   User.validates('password', 'must be at least 5 characters in length', v => v && v.length >= 5);
+  User.hides('password');
 
   return User;
 

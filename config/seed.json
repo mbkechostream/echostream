@@ -1,9 +1,47 @@
 {
 
-  "development": {},
+  "development": {
+    "User": [
+      {
+        "username": "Rihanna",
+        "email": "rihanna@r.com",
+        "password": "password"
+      },
+      {
+        "username": "The Weeknd",
+        "email": "weeknd@w.com",
+        "password": "password"
+      },
+      {
+        "username": "Drake",
+        "email": "drake@d.com",
+        "password": "password"
+      }
+    ],
+    "Collaboration": [
+      {
+        "user_id": 1,
+        "soundbite_id": 1
+      }
+    ],
+    "Soundbite": [
+      {
+        "user_id": 1,
+        "raw_data": "Hello, world"
+      },
+      {
+        "user_id": 2,
+        "raw_data": "hello, world!"
+      },
+      {
+        "user_id": 3,
+        "raw_data": "You used to call me on my cell phone, world"
+      }
+    ]
+  },
 
-  "test": {},
+"test": {},
 
-  "production": {}
+"production": {}
 
 }

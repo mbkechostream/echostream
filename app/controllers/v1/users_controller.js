@@ -11,9 +11,17 @@ module.exports = (function() {
 
       User.query()
         .where(this.params.query)
+	.join('soundbites')
+        .join('collaborations')
         .end((err, models) => {
 
-          this.respond(err || models);
+	  this.respond(err || models, [
+	      'id',
+              'username',
+              'email',
+              'soundbites',
+              'collaborations'
+          ]);
 
         });
 

@@ -33,6 +33,7 @@ module.exports = (function() {
 
   const V1UsersController = Nodal.require('app/controllers/v1/users_controller.js');
   const V1AccessTokensController = Nodal.require('app/controllers/v1/access_tokens_controller.js');
+  const V1SoundbitesController = Nodal.require('app/controllers/v1/soundbites_controller.js');
 
   /* generator: end imports */
 
@@ -43,6 +44,7 @@ module.exports = (function() {
 
   router.route('/v1/users/{id}').use(V1UsersController);
   router.route('/v1/access_tokens/{id}').use(V1AccessTokensController);
+  router.route('/v1/soundbites/{id}').use(V1SoundbitesController);
 
   /* generator: end routes */
 
