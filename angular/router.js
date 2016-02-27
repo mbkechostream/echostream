@@ -27,6 +27,21 @@ app.config(function($stateProvider, $locationProvider, $urlRouterProvider) {
         }
       )
 
+      .state(
+        'root.echoes',
+	{
+	   url: '/echoes',
+	   templateUrl: 'pages/root/echoes/template.html'
+	}
+      )
+      .state(
+        'root.login',
+	{
+	  url: '/login',
+	  templateUrl: 'pages/root/login/template.html'
+        }
+      )
+
   $urlRouterProvider.otherwise('/');
 
 });
