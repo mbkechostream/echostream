@@ -36,7 +36,6 @@ module.exports = (function() {
 
   /* generator: end imports */
 
-  router.route('/').use(IndexController);
   router.route('/static/*').use(StaticController);
 
   /* generator: begin routes */
@@ -46,7 +45,7 @@ module.exports = (function() {
 
   /* generator: end routes */
 
-  router.route('/*').use(Error404Controller);
+  router.route('/*').use(IndexController);
 
   return router;
 

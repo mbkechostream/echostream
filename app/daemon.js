@@ -5,9 +5,9 @@ module.exports = (() => {
   const Nodal = require('nodal');
   const daemon = new Nodal.Daemon();
 
-  const DummyInitializer = Nodal.require('initializers/dummy_initializer.js');
+  const AngularInitializer = require('nodal-angular').Initializer;
 
-  daemon.initializers.use(DummyInitializer);
+  daemon.initializers.use(AngularInitializer);
 
   return daemon;
 
