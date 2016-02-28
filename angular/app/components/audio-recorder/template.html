@@ -1,14 +1,22 @@
-<div>
-  New Component: AudioRecorder
-  <input type="range" id="bpm" min="60" value="98" max="200" step="1">
-  <button ng-click="startRecording()" ng-disabled="!!openStream">Record</button>
-  <button ng-click="stopRecording()" ng-disabled="!openStream">Stop</button>
+<md-content>
+  <md-toolbar>Audio Recorder</md-toolbar>
+
+  <div layout="row">
+    <div flex="25"></div>
+    <md-button flex="25" class="md-primary" ng-click="startRecording()" ng-disabled="!!openStream">Record</md-button>
+    <md-button flex="25" class="md-primary" ng-click="stopRecording()" ng-disabled="!openStream">Stop</md-button>
+    <div flex="25"></div>
+  </div>
+
+  <div>
+    <input type="file">
+  </div>
 
   <div ng-repeat="sample in samples">
-    <input type="checkbox" ng-model="sample.selected">
+    <md-checkbox ng-model="sample.selected"></md-checkbox>
     <audio src="{{ sample.uri }}" controls="true"></audio>
   </div>
 
-  <button ng-click="combine()" ng-show="samples.length">Combine</button>
+  <md-button ng-click="combine()" ng-show="samples.length">Combine</md-button>
 
-</div>
+</md-content>
