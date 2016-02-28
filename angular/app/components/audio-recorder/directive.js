@@ -88,6 +88,10 @@ app.directive('audioRecorder', function() {
         height: 80
       });
 
+      scope.wavesurfer.on('finish', function() {
+        scope.$apply();
+      });
+
     },
     controller: ['$scope', '$sce', 'API', function($scope, $sce, API) {
 
@@ -119,6 +123,10 @@ app.directive('audioRecorder', function() {
 
         var blob = new Blob(out, {type: 'audio/wav'});
         var uri = $sce.trustAsResourceUrl(URL.createObjectURL(blob));
+        var audio = new Audio(uri);
+        audio.addEventListener('ended', function() {
+          $scope.$apply();
+        });
 
         return {
           loop: !!loop,
@@ -126,7 +134,7 @@ app.directive('audioRecorder', function() {
           channels: channelData,
           blob: blob,
           uri: uri,
-          audio: new Audio(uri)
+          audio: audio
         };
 
       }
@@ -331,8 +339,16 @@ app.directive('audioRecorder', function() {
         sample.audio.play();
       };
 
+      $scope.pause = function(sample) {
+        sample.audio.pause();
+      };
+
       $scope.playPreview = function() {
         $scope.wavesurfer.play();
+      };
+
+      $scope.pausePreview = function() {
+        $scope.wavesurfer.pause();
       };
 
       $scope.publish = function(sample) {
