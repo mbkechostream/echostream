@@ -1,32 +1,54 @@
 song {
 
   /* style your components here */
-  .songContainer {
+  .song-container {
     display: flex;
     flex-direction: column;
     margin: 20px;
     font-family: Impact, sans-serif;
   }
 
-  .playButton {
+  .play-button {
     width: 30px;
     height: 30px;
     margin-right: 20px;
   }
 
-  .titleRow {
+  .title-row {
     display: flex;
     margin-bottom: 15px;
     margin-top: 15px;
   }
 
-  .titleAndFacelistContainer {
+  .title-and-facelist-container {
     display: flex;
     flex-direction: column;
   }
 
   .soundwave {
     height: 50px;
+  }
+
+  .show-tracks-button {
+    margin-top: 15px;
+    align-self: center;
+  }
+
+  .animate-show {
+    line-height: 20px;
+    opacity: 1;
+    padding: 10px;
+    border: 1px solid black;
+  }
+
+  .animate-show.ng-hide-add, .animate-show.ng-hide-remove {
+    transition: all linear 0.5s;
+  }
+
+  .animate-show.ng-hide {
+    line-height: 0;
+    opacity: 0;
+    padding: 0 10px;
   }
 
 }
