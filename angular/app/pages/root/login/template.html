@@ -5,5 +5,7 @@
   the FB.login() function when clicked.
 -->
 <img src="/static/images/EchoStream.png" class="logo">
-<fb:login-button scope="public_profile,email" ng-click="checkLoginState()"></fb:login-button>
+<fb:login-button scope="public_profile,email" ng-hide="loggedIn" ng-click="checkLoginState()"></fb:login-button>
+<img id="fbPhoto" ng-src="{{ fb_photo }}">
+<p ng-show="loggedIn" class="login">Logging in...</p>
 </div>

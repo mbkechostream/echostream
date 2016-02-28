@@ -13,14 +13,22 @@
     -webkit-align-items: center;
     -webkit-justify-content: center;
 
-}
+	.logo{
+	  display:block;
+	  width:25%;
+	  height:25%;
+	}
 
-.logo{
-  display:block;
-  width:25%;
-  height:25%;
-}
+	#fbPhoto {
+	   border-radius: 50%;
+	}
 
-navigation-bar {
-   display: none;
+	.login {
+	  margin-top: 10px;
+	  text-color: #AB70C9;
+	  font-family: proxima-nova, sans-serif;;
+	  color: #ffffff;
+	  font-size: 12px;
+	}
+
 }

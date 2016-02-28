@@ -71,10 +71,28 @@ app.controller('RootLoginController', ['$scope', '$window', 'API', function($sco
   // Here we run a very simple test of the Graph API after login is
   // successful.  See statusChangeCallback() for when this call is made.
   function testAPI() {
-    console.log('Welcome!  Fetching your information.... ');
-    FB.api('/me', function(response) {
-      console.log('Successful login for: ' + response.name);
-      $window.location.href = "/echoes";
+    var user_id;
+
+    /* Grab user info */
+    FB.api('/me', function(response_user) {
+      console.log('Successful login for: ' + response_user.name);
+      user_id = response_user.id;
+    });
+
+    /* make the photo API call */
+    FB.api('/me/picture',
+      function (photo) {
+        if (photo && !photo.error) {
+	  console.log(photo.data.url);
+	  $scope.fb_photo = photo.data.url;
+	  $scope.$apply(function() {
+	     $scope.loggedIn = true;
+	    $timeout(function() {
+		$window.location.href = "/echoes";
+	    }, 5000);
+	  })
+        }
     });
   }
+
 }]);
