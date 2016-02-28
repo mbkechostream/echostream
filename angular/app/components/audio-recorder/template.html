@@ -1,5 +1,14 @@
 <div>
   New Component: AudioRecorder
   <input type="range" id="bpm" min="60" value="98" max="200" step="1">
-  <button>Record</button>
+  <button ng-click="startRecording()" ng-disabled="!!openStream">Record</button>
+  <button ng-click="stopRecording()" ng-disabled="!openStream">Stop</button>
+
+  <div ng-repeat="sample in samples">
+    <input type="checkbox" ng-model="sample.selected">
+    <audio src="{{ sample.uri }}" controls="true"></audio>
+  </div>
+
+  <button ng-click="combine()" ng-show="samples.length">Combine</button>
+
 </div>
