@@ -12,6 +12,8 @@ module.exports = (function() {
   const User = Nodal.require('app/models/user.js');
   Soundbite.joinsTo(User, {multiple: true});
 
+  Soundbite.validates('title', 'must be at least 5 characters', (title) => title && title.length >= 5);
+
   return Soundbite;
 
 })();

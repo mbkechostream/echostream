@@ -12,6 +12,7 @@ module.exports = (function() {
       Soundbite.query()
         .join('user')
         .where(this.params.query)
+        .orderBy('id', 'DESC')
         .end((err, models) => {
 
 		this.respond(err || models, ['id', 'raw_data', 'created_at', 'user', 'collaboration', 'title']);

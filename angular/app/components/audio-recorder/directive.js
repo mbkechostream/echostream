@@ -143,7 +143,7 @@ app.directive('audioRecorder', function() {
       $scope.samples = [null, null, null, null];
       $scope.preview = null;
 
-      $scope.startRecording = function(idx) {
+      $scope.startRecording = function(idx, loop) {
 
         if ($scope.openStream[idx]) {
           return;
@@ -176,7 +176,8 @@ app.directive('audioRecorder', function() {
                 rightChannel
               ],
               sampleRate: sampleRate,
-              length: 0
+              length: 0,
+              loop: !!loop
             };
 
             // creates a gain node
@@ -247,7 +248,7 @@ app.directive('audioRecorder', function() {
 
         });
 
-        $scope.samples[idx] = createAudio(openStream.sampleRate, channels);
+        $scope.samples[idx] = createAudio(openStream.sampleRate, channels, openStream.loop);
         $scope.combine();
 
       };
@@ -261,6 +262,8 @@ app.directive('audioRecorder', function() {
 
         var samples = $scope.samples.filter(function(s) { return s; });
         if (!samples.length) {
+          $scope.preview = null;
+          $scope.wavesurfer.empty();
           return;
         }
 
@@ -343,6 +346,11 @@ app.directive('audioRecorder', function() {
         sample.audio.pause();
       };
 
+      $scope.remove = function(idx) {
+        $scope.samples[idx] = null;
+        $scope.combine();
+      };
+
       $scope.playPreview = function() {
         $scope.wavesurfer.play();
       };
@@ -359,16 +367,21 @@ app.directive('audioRecorder', function() {
 
           var base64data = reader.result;
           API.request('soundbites').create({
-            title: sample.name,
+            title: sample.title,
             raw_data: base64data,
             user_id: 1
           }, function(err, response) {
 
             if (err) {
-              return alert(err.message);
+              var msg = err.message;
+              if (err.details) {
+                msg += '\n\n' + Object.keys(err.details).map(function(k) { return k + ': ' + err.details[k]; }).join('\n');
+              }
+              return alert(msg);
             }
 
             alert('Published successfully!');
+            window.location.href = '/echoes';
 
           });
 
