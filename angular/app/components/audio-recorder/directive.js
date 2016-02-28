@@ -143,7 +143,7 @@ app.directive('audioRecorder', function() {
       $scope.samples = [null, null, null, null];
       $scope.preview = null;
 
-      $scope.startRecording = function(idx) {
+      $scope.startRecording = function(idx, loop) {
 
         if ($scope.openStream[idx]) {
           return;
@@ -176,7 +176,8 @@ app.directive('audioRecorder', function() {
                 rightChannel
               ],
               sampleRate: sampleRate,
-              length: 0
+              length: 0,
+              loop: !!loop
             };
 
             // creates a gain node
@@ -247,7 +248,7 @@ app.directive('audioRecorder', function() {
 
         });
 
-        $scope.samples[idx] = createAudio(openStream.sampleRate, channels);
+        $scope.samples[idx] = createAudio(openStream.sampleRate, channels, openStream.loop);
         $scope.combine();
 
       };

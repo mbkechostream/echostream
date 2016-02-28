@@ -4,16 +4,21 @@ app.directive('song', function() {
     scope: {item: '&'},
     templateUrl: 'components/song/template.html',
     link: function(scope, elem, attrs) {
+
       scope.wavesurfer = WaveSurfer.create({
         container: elem[0].getElementsByClassName('soundwave')[0],
         waveColor: 'gray',
         progressColor: 'purple',
         barWidth: 5,
       });
-      scope.wavesurfer.load('/static/sounds/imperial_march.wav');
+
+      scope.wavesurfer.load(scope.item.raw_data);
+
     },
     controller: ['$scope', function($scope) {
+
       $scope.item = $scope.item();
+
       $scope.hideTracklist = 'isHidden';
       $scope.toggleTracklist = function() {
       	$scope.showTracks = !$scope.showTracks;
