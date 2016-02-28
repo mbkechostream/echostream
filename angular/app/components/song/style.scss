@@ -3,7 +3,6 @@ song {
   /* style your components here */
   .song-container {
     display: flex;
-    flex-direction: column;
     margin: 20px;
     font-family: Impact, sans-serif;
   }
@@ -20,11 +19,6 @@ song {
     margin-top: 15px;
   }
 
-  .title-and-facelist-container {
-    display: flex;
-    flex-direction: column;
-  }
-
   .soundwave {
     height: 50px;
   }
@@ -37,7 +31,16 @@ song {
     opacity: 1;
     padding: 10px;
     border: 1px solid black;
-    background: white;
+  }
+
+  .hide-tracks-button {
+    margin-top: 15px;
+    align-self: center;
+    transition: all linear 0.5s;
+    line-height: 20px;
+    opacity: 1;
+    padding: 10px;
+    border: 1px solid black;
   }
 
   .isHidden {
@@ -46,4 +49,15 @@ song {
     padding: 0 10px;
   }
 
+  .collaborator-column {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .song-column {
+    display: flex;
+    flex-direction: column;
+    width: 100%
+  }
 }
