@@ -1,4 +1,4 @@
-app.controller('RootLoginController', ['$scope', '$window', 'API', function($scope, $window, API) {
+app.controller('RootLoginController', ['$scope', '$window', '$timeout', 'API', function($scope, $window, $timeout, API) {
 
   // This is called with the results from from FB.getLoginStatus().
   function statusChangeCallback(response) {
