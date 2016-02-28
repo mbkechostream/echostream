@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "bcrypt": "^0.8.5",
-    "nodal": "0.7.9",
+    "nodal": "0.7.10-rc1",
     "nodal-angular": "0.0.4"
   },
   "devDependencies": {
