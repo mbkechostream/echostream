@@ -1,8 +1,32 @@
 song {
 
   /* style your components here */
-  .title {
-    color: red;
+  .songContainer {
+    display: flex;
+    flex-direction: column;
+    margin: 20px;
+    font-family: Impact, sans-serif;
+  }
+
+  .playButton {
+    width: 30px;
+    height: 30px;
+    margin-right: 20px;
+  }
+
+  .titleRow {
+    display: flex;
+    margin-bottom: 15px;
+    margin-top: 15px;
+  }
+
+  .titleAndFacelistContainer {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .soundwave {
+    height: 50px;
   }
 
 }

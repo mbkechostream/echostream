@@ -14,7 +14,7 @@ module.exports = (function() {
         .where(this.params.query)
         .end((err, models) => {
 
-		this.respond(err || models, ['id', 'raw_data', 'created_at', 'user', 'collaboration']);
+		this.respond(err || models, ['id', 'raw_data', 'created_at', 'user', 'collaboration', 'title']);
 
         });
 
