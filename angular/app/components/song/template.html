@@ -19,12 +19,13 @@
   <div class="song-column">
     <div class="title-row">
       <div class="play-button-and-title">
-        <img src="/static/images/icons/PlayButton.png" class="play-button" ng-click="playSong()">
+        <img src="/static/images/icons/PlayButton.png" ng-show="!songPlaying" class="play-button" ng-click="playSong()">
+        <img src="/static/images/icons/pausegrey.png" ng-show="songPlaying" class="play-button" ng-click="pauseSong()">
         <div class="song-title md-display-1">
           {{ item.title }}
         </div>
       </div>
-      <img src="/static/images/icons/EchoTrackButton.png" ng-class="showTracklist" ng-click="hideTracklist=''; showTracklist='isHidden'">
+      <img src="/static/images/icons/ContributeButton.png" ng-class="showTracklist" ng-click="hideTracklist=''; showTracklist='isHidden'">
     </div>
     <div class="soundwave"></div>
     </div>
