@@ -1,21 +1,35 @@
 <md-content>
   <md-toolbar>Audio Recorder</md-toolbar>
 
-  <div layout="row">
-    <div flex="20"></div>
-    <md-button flex="20" class="md-primary" ng-click="startRecording()" ng-disabled="!!openStream">Record</md-button>
-    <md-button flex="20" class="md-primary" ng-click="stopRecording()" ng-disabled="!openStream">Stop</md-button>
-    <md-button
-      flex="20"
-      ngf-select="upload($file)"
-      ngf-pattern="'audio/wav'"
-      class="md-primary">
-      Upload
-    </md-button>
-    <div flex="20"></div>
+  <md-button ng-show="preview" ng-click="play(preview)">
+    Preview
+  </md-button>
+
+  <div style="width: 800px; margin: 0 auto; position: relative;">
+    <div ng-repeat="sample in samples track by $index" style="position: relative; width: 100%; height: 80px;">
+      <div ng-show="sample">
+        <div
+          style="z-index: 1; position: absolute; height: 100%; width: 80px; left: 0px; background-color: rgba(32, 32, 32, 0.5);"
+          ng-click="play(sample)">
+          <img src="/static/images/icons/play.png" style="width: 100%; height: 100%;">
+        </div>
+      </div>
+      <div ng-show="sample" style="z-index: 0; position: absolute; height: 100%; width: {{ calculatePct(sample, samples) }}%; background-color: {{ calculateColor($index); }}"></div>
+      <div ng-show="!sample">
+        <md-button flex="20" class="md-primary" ng-click="startRecording($index)" ng-show="!openStream[$index]">Record</md-button>
+        <md-button flex="20" class="md-primary" ng-click="stopRecording($index)" ng-show="!!openStream[$index]">Stop</md-button>
+        <md-button
+          flex="20"
+          ngf-select="upload($file, $index)"
+          ngf-pattern="'audio/wav'"
+          class="md-primary">
+          Upload
+        </md-button>
+      </div>
+    </div>
   </div>
 
-  <div layout="row">
+  <!-- div layout="row">
     <div flex="10">Use</div>
     <div flex="10">Loop</div>
     <div flex="10">Length</div>
@@ -45,6 +59,6 @@
     </div>
   </div>
 
-  <md-button ng-click="combine()" ng-show="samples.length">Mix Selected</md-button>
+  <md-button ng-click="combine()" ng-show="samples.length">Mix Selected</md-button -->
 
 </md-content>
