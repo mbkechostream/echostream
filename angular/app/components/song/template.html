@@ -11,10 +11,12 @@
     </div>
   </div>
   <img src="http://rack.1.mshcdn.com/media/ZgkyMDEyLzEyLzA0LzM0L2FyZXNvdW5kd2F2LjV1aC5qcGcKcAl0aHVtYgk5NTB4NTM0IwplCWpwZw/0476e2e1/0c5/are-sound-waves-the-future-of-mobile-marketing--68005190f2.jpg" class="soundwave">
-  <div class="show-tracks-button animate-show" ng-click="toggleTrackList()" ng-show="clicked">
-    Hide tracks
-  </div>
-  <div class="show-tracks-button animate-show" ng-click="toggleTracklist()" ng-hide="clicked">
+  <div class="show-tracks-button" ng-class="showTracklist" ng-click="hideTracklist=''; showTracklist='isHidden'">
     Show tracks
+  </div>
+  <div class ng-class="hideTracklist">
+    <div class="show-tracks-button" ng-click="hideTracklist='isHidden'; showTracklist=''">
+      Hide tracks
+    </div>
   </div>
 </div>
