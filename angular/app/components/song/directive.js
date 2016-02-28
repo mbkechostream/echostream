@@ -9,7 +9,7 @@ app.directive('song', function() {
         container: elem[0].getElementsByClassName('soundwave')[0],
         waveColor: 'gray',
         progressColor: 'purple',
-        barWidth: 5,
+        barWidth: 2,
       });
 
       scope.wavesurfer.load(scope.item.raw_data);

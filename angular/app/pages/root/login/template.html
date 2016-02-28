@@ -4,7 +4,7 @@
   the JavaScript SDK to present a graphical Login button that triggers
   the FB.login() function when clicked.
 -->
-<img src="/static/images/EchoStream.png" onclick="javascript:window.location.replace('/topics');" class="logo">
+<img src="/static/images/icons/echo_logo.png" onclick="javascript:window.location.replace('/topics');" class="logo">
 <fb:login-button scope="public_profile,email" onlogin="javascript:window.location.replace('/topics');"></fb:login-button>
 <img id="fbPhoto" ng-src="{{ fb_photo }}">
 <p ng-show="loggedIn" class="login">Logging in...</p>

@@ -83,7 +83,7 @@ app.directive('audioRecorder', function() {
         container: elem[0].getElementsByClassName('preview')[0],
         waveColor: 'gray',
         progressColor: 'purple',
-        barWidth: 5,
+        barWidth: 2,
         fillParent: true,
         height: 80
       });
