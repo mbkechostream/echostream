@@ -74,7 +74,7 @@ app.controller('RootLoginController', ['$scope', '$window', 'API', function($sco
     console.log('Welcome!  Fetching your information.... ');
     FB.api('/me', function(response) {
       console.log('Successful login for: ' + response.name);
-      //$window.location.href = "/echoes";
+      $window.location.href = "/echoes";
     });
   }
 }]);
