@@ -15,12 +15,36 @@
     <div flex="20"></div>
   </div>
 
-  <div ng-repeat="sample in samples">
-    <md-checkbox ng-model="sample.selected"></md-checkbox>
-    <audio src="{{ sample.uri }}" controls="true"></audio>
-    <md-checkbox ng-model="sample.loop"></md-checkbox> Loop
+  <div layout="row">
+    <div flex="10">Use</div>
+    <div flex="10">Loop</div>
+    <div flex="10">Length</div>
+    <div flex="20">Name</div>
+    <div flex="20">Audio</div>
+    <div flex="30"></div>
   </div>
 
-  <md-button ng-click="combine()" ng-show="samples.length">Combine</md-button>
+  <div ng-repeat="sample in samples" layout="row">
+    <div flex="10">
+      <md-checkbox ng-model="sample.selected"></md-checkbox>
+    </div>
+    <div flex="10">
+      <md-checkbox ng-model="sample.loop"></md-checkbox>
+    </div>
+    <div flex="10">
+      {{ getSampleLength(sample) }} s
+    </div>
+    <md-input-container flex="20">
+      <input type="text" ng-model="sample.name" placeholder="Name">
+    </md-input-container>
+    <div flex="20" style="position: relative;">
+      <audio style="max-width: 100%;" src="{{ sample.uri }}" controls="true"></audio>
+    </div>
+    <div flex="30">
+      <md-button class="md-primary" ng-click="publish(sample)">Publish This</md-button>
+    </div>
+  </div>
+
+  <md-button ng-click="combine()" ng-show="samples.length">Mix Selected</md-button>
 
 </md-content>

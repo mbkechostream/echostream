@@ -77,10 +77,11 @@ app.directive('audioRecorder', function() {
 
   return {
     templateUrl: 'components/audio-recorder/template.html',
-    controller: ['$scope', '$sce', function($scope, $sce) {
+    controller: ['$scope', '$sce', 'API', function($scope, $sce, API) {
 
-      var createAudio = function (sampleRate, channelData) {
+      var createAudio = function (sampleRate, channelData, name) {
 
+        name = name || 'Unnamed';
         var bitsPerSample = 16;
         var channels = channelData.length;
         var data = interleave(channelData);
@@ -107,6 +108,7 @@ app.directive('audioRecorder', function() {
         var blob = new Blob(out, {type: 'audio/wav'});
 
         return {
+          name: name,
           sampleRate: sampleRate,
           channels: channelData,
           blob: blob,
@@ -227,7 +229,8 @@ app.directive('audioRecorder', function() {
         //   createBeat(openStream.sampleRate, openStream.length, 98)
         // );
 
-        $scope.samples.push(createAudio(openStream.sampleRate, channels));
+        $scope.samples.push(createAudio(openStream.sampleRate, channels, 'Recording ' + ($scope.samples.length + 1)));
+
       }
 
       $scope.combine = function() {
@@ -249,7 +252,6 @@ app.directive('audioRecorder', function() {
 
       $scope.upload = function($file) {
 
-        console.log($file);
         var reader = new FileReader();
         reader.onload = function() {
 
@@ -283,11 +285,41 @@ app.directive('audioRecorder', function() {
             channels[1][(i >>> 1) + 1] = data[i + 1];
           }
 
-          $scope.samples.push(createAudio(44100, channels));
+          $scope.samples.push(createAudio(44100, channels, $file.name));
           $scope.$apply();
 
         };
         reader.readAsArrayBuffer($file);
+
+      };
+
+      $scope.getSampleLength = function(sample) {
+        return (sample.channels[0].length / sample.sampleRate).toFixed(2);
+      };
+
+      $scope.publish = function(sample) {
+
+        var reader = new window.FileReader();
+        reader.readAsDataURL(sample.blob);
+        reader.onloadend = function() {
+
+          var base64data = reader.result;
+          API.request('soundbites').create({
+            title: sample.name,
+            raw_data: base64data,
+            user_id: 1
+          }, function(err, response) {
+
+            if (err) {
+              return alert(err.message);
+            }
+
+            alert('Published successfully!');
+
+          });
+
+
+        }
 
       };
 
