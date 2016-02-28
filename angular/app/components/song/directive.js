@@ -5,9 +5,9 @@ app.directive('song', function() {
     templateUrl: 'components/song/template.html',
     controller: ['$scope', function($scope) {
       $scope.item = $scope.item();
+      $scope.hideTracklist = 'isHidden';
       $scope.toggleTracklist = function() {
-      	console.log('hi');
-      	$scope.clicked = !$scope.clicked;
+      	$scope.showTracks = !$scope.showTracks;
       }
     }]
   };
