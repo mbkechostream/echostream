@@ -2,7 +2,6 @@ app.controller('RootLoginController', ['$scope', '$window', '$timeout', 'API', f
 
   // This is called with the results from from FB.getLoginStatus().
   function statusChangeCallback(response) {
-    console.log('statusChangeCallback');
     console.log(response);
     // The response object is returned with a status field that lets the
     // app know the current login status of the person.
@@ -19,15 +18,17 @@ app.controller('RootLoginController', ['$scope', '$window', '$timeout', 'API', f
       // The person is not logged into Facebook, so we're not sure if
       // they are logged into this app or not.
       document.getElementById('status').innerHTML = 'Please log ' +
-        'into Facebook.';
+        'in through Facebook.';
     }
   }
 
   // This function is called when someone finishes with the Login
   // Button.  See the onlogin handler attached to it in the sample
   // code below.
-  $scope.checkLoginState = function() {
-    FB.getLoginStatus(function(response) {
+
+  $scope.checkState = function() {
+      console.log('check login');
+      FB.getLoginStatus(function(response) {
       statusChangeCallback(response);
     });
   }
@@ -95,4 +96,9 @@ app.controller('RootLoginController', ['$scope', '$window', '$timeout', 'API', f
     });
   }
 
+ return {
+    checkLoginState: $scope.checkLoginState
+  };
+
 }]);
+
