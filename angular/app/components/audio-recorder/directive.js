@@ -77,9 +77,21 @@ app.directive('audioRecorder', function() {
 
   return {
     templateUrl: 'components/audio-recorder/template.html',
+    link: function(scope, elem, attrs) {
+
+      scope.wavesurfer = WaveSurfer.create({
+        container: elem[0].getElementsByClassName('preview')[0],
+        waveColor: 'gray',
+        progressColor: 'purple',
+        barWidth: 5,
+        fillParent: true,
+        height: 80
+      });
+
+    },
     controller: ['$scope', '$sce', 'API', function($scope, $sce, API) {
 
-      var createAudio = function (sampleRate, channelData, name) {
+      var createAudio = function (sampleRate, channelData, loop) {
 
         name = name || 'Unnamed';
         var bitsPerSample = 16;
@@ -106,23 +118,26 @@ app.directive('audioRecorder', function() {
         ];
 
         var blob = new Blob(out, {type: 'audio/wav'});
+        var uri = $sce.trustAsResourceUrl(URL.createObjectURL(blob));
 
         return {
-          name: name,
+          loop: !!loop,
           sampleRate: sampleRate,
           channels: channelData,
           blob: blob,
-          uri: $sce.trustAsResourceUrl(URL.createObjectURL(blob))
+          uri: uri,
+          audio: new Audio(uri)
         };
 
       }
 
-      $scope.openStream = null;
-      $scope.samples = [];
+      $scope.openStream = [null, null, null, null];
+      $scope.samples = [null, null, null, null];
+      $scope.preview = null;
 
-      $scope.startRecording = function() {
+      $scope.startRecording = function(idx) {
 
-        if ($scope.openStream) {
+        if ($scope.openStream[idx]) {
           return;
         }
 
@@ -145,7 +160,7 @@ app.directive('audioRecorder', function() {
             var sampleRate = context.sampleRate;
 
             // Set stream
-            $scope.openStream = {
+            $scope.openStream[idx] = {
               stream: stream,
               context: context,
               channels: [
@@ -180,7 +195,7 @@ app.directive('audioRecorder', function() {
               // we clone the samples
               leftChannel.push(new Float32Array(left));
               rightChannel.push(new Float32Array(right));
-              $scope.openStream.length += bufferSize;
+              $scope.openStream[idx].length += bufferSize;
             }
 
             // we connect the recorder
@@ -197,18 +212,18 @@ app.directive('audioRecorder', function() {
 
       };
 
-      $scope.stopRecording = function() {
+      $scope.stopRecording = function(idx) {
 
-        if ($scope.openStream) {
-          $scope.openStream.stream.getTracks().forEach(function(track) { track.stop(); });
-          $scope.openStream.context.close();
-          processStream($scope.openStream);
+        if ($scope.openStream[idx]) {
+          $scope.openStream[idx].stream.getTracks().forEach(function(track) { track.stop(); });
+          $scope.openStream[idx].context.close();
+          processStream($scope.openStream[idx], idx);
         }
-        $scope.openStream = null;
+        $scope.openStream[idx] = null;
 
       };
 
-      function processStream(openStream) {
+      function processStream(openStream, idx) {
 
         var channels = openStream.channels.map(function(channel) {
 
@@ -224,19 +239,20 @@ app.directive('audioRecorder', function() {
 
         });
 
-        // channels = combineChannels(
-        //   channels,
-        //   createBeat(openStream.sampleRate, openStream.length, 98)
-        // );
+        $scope.samples[idx] = createAudio(openStream.sampleRate, channels);
+        $scope.combine();
 
-        $scope.samples.push(createAudio(openStream.sampleRate, channels, 'Recording ' + ($scope.samples.length + 1)));
+      };
 
-      }
+      $scope.createPreview = function(preview) {
+        $scope.preview = preview;
+        $scope.wavesurfer.load(preview.uri);
+      };
 
       $scope.combine = function() {
 
-        var samples = $scope.samples.filter(function(s) { return s.selected; });
-        if (samples.length < 1) {
+        var samples = $scope.samples.filter(function(s) { return s; });
+        if (!samples.length) {
           return;
         }
 
@@ -246,11 +262,12 @@ app.directive('audioRecorder', function() {
           channels.loop = s.loop;
           return channels;
         });
-        $scope.samples.push(createAudio(sampleRate, combineChannels(channels)));
+
+        $scope.createPreview(createAudio(sampleRate, combineChannels(channels)));
 
       };
 
-      $scope.upload = function($file) {
+      $scope.upload = function($file, idx) {
 
         var reader = new FileReader();
         reader.onload = function() {
@@ -285,16 +302,37 @@ app.directive('audioRecorder', function() {
             channels[1][(i >>> 1) + 1] = data[i + 1];
           }
 
-          $scope.samples.push(createAudio(44100, channels, $file.name));
+          $scope.samples[idx] = createAudio(44100, channels, true);
+          $scope.combine();
           $scope.$apply();
 
         };
+
         reader.readAsArrayBuffer($file);
 
       };
 
       $scope.getSampleLength = function(sample) {
-        return (sample.channels[0].length / sample.sampleRate).toFixed(2);
+        return !sample ? 0 : (sample.channels[0].length / sample.sampleRate).toFixed(2);
+      };
+
+      $scope.calculatePct = function(sample, samples) {
+
+        var max = Math.max.apply(null, samples.filter(function(s) { return s; }).map($scope.getSampleLength));
+        return ($scope.getSampleLength(sample) / max) * 100;
+
+      };
+
+      $scope.calculateColor = function(i) {
+        return ['#7986CB', '4DB6AC', 'EF5350', 'F5A623'][i % 4];
+      };
+
+      $scope.play = function(sample) {
+        sample.audio.play();
+      };
+
+      $scope.playPreview = function() {
+        $scope.wavesurfer.play();
       };
 
       $scope.publish = function(sample) {
