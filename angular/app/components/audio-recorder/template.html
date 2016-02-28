@@ -68,53 +68,34 @@
             <img src="/static/images/icons/pausegrey.png" style="width: 80%; height: 80%; margin: 10%;">
           </div>
         </div>
-        <div ng-show="sample" style="z-index: 0; position: absolute; height: 100%; width: {{ calculatePct(sample, samples) }}%; background-color: {{ calculateColor($index); }}"></div>
         <div ng-show="!sample">
-          <md-button flex="20" class="md-primary" ng-click="startRecording($index)" ng-show="!openStream[$index]">Record</md-button>
-          <md-button flex="20" class="md-primary" ng-click="stopRecording($index)" ng-show="!!openStream[$index]">Stop</md-button>
-          <md-button
-            flex="20"
+          <div
+            style="z-index: 1; position: absolute; height: 100%; width: 80px; left: 0px; background-color: rgba(32, 32, 32, 0.5);"
             ngf-select="upload($file, $index)"
-            ngf-pattern="'audio/wav'"
-            class="md-primary">
-            Upload
-          </md-button>
+            ngf-pattern="'audio/wav'">
+            <img src="/static/images/icons/loop.png" style="width: 80%; height: 80%; margin: 10%;">
+          </div>
+          <div
+            ng-show="!openStream[$index]"
+            style="z-index: 1; position: absolute; height: 100%; width: 80px; left: 80px; background-color: rgba(32, 32, 32, 0.5);"
+            ng-click="startRecording($index)">
+            <img src="/static/images/icons/record.png" style="width: 80%; height: 80%; margin: 10%;">
+          </div>
+          <div
+            ng-show="!!openStream[$index]"
+            style="z-index: 1; position: absolute; height: 100%; width: 80px; left: 80px; background-color: rgba(32, 32, 32, 0.5);"
+            ng-click="stopRecording($index)">
+            <img src="/static/images/icons/pausegrey.png" style="width: 80%; height: 80%; margin: 10%;">
+          </div>
+        </div>
+        <div style="z-index: 0; position: absolute; left: 0px; height: 100%; width: 160px; background-color: {{ calculateColor($index); }}"></div>
+        <div style="z-index: 0; position: absolute; left: 160px; height: 100%; width: calc({{ calculatePct(sample, samples) }}% - 160px); background-color: {{ calculateColor($index); }}"></div>
+        <div ng-show="sample.loop" style="z-index: 1; position: absolute; right: 20px; bottom: 20px; width: 40px;">
+          <img src="/static/images/icons/loopwav.png" style="width: 100%;"></img>
         </div>
       </div>
     </div>
     <div style="clear: both;">
   </div>
-
-  <!-- div layout="row">
-    <div flex="10">Use</div>
-    <div flex="10">Loop</div>
-    <div flex="10">Length</div>
-    <div flex="20">Name</div>
-    <div flex="20">Audio</div>
-    <div flex="30"></div>
-  </div>
-
-  <div ng-repeat="sample in samples" layout="row">
-    <div flex="10">
-      <md-checkbox ng-model="sample.selected"></md-checkbox>
-    </div>
-    <div flex="10">
-      <md-checkbox ng-model="sample.loop"></md-checkbox>
-    </div>
-    <div flex="10">
-      {{ getSampleLength(sample) }} s
-    </div>
-    <md-input-container flex="20">
-      <input type="text" ng-model="sample.name" placeholder="Name">
-    </md-input-container>
-    <div flex="20" style="position: relative;">
-      <audio style="max-width: 100%;" src="{{ sample.uri }}" controls="true"></audio>
-    </div>
-    <div flex="30">
-      <md-button class="md-primary" ng-click="publish(sample)">Publish This</md-button>
-    </div>
-  </div>
-
-  <md-button ng-click="combine()" ng-show="samples.length">Mix Selected</md-button -->
 
 </md-content>
