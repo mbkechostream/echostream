@@ -1,11 +1,15 @@
 <md-content>
   <md-toolbar>Audio Recorder</md-toolbar>
 
-  <md-button ng-show="preview" ng-click="play(preview)">
-    Preview
-  </md-button>
-
   <div style="width: 800px; margin: 0 auto; position: relative;">
+    <div ng-show="preview" style="position: relative; width: 100%; height: 80px;">
+      <div class="preview" style="z-index: 0; position: absolute; width: 100%; height: 100%;"></div>
+      <div
+        style="z-index: 1; position: absolute; height: 100%; width: 80px; left: 0px; background-color: rgba(32, 32, 32, 0.5);"
+        ng-click="playPreview()">
+        <img src="/static/images/icons/play.png" style="width: 100%; height: 100%;">
+      </div>
+    </div>
     <div ng-repeat="sample in samples track by $index" style="position: relative; width: 100%; height: 80px;">
       <div ng-show="sample">
         <div

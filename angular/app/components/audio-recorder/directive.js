@@ -77,6 +77,18 @@ app.directive('audioRecorder', function() {
 
   return {
     templateUrl: 'components/audio-recorder/template.html',
+    link: function(scope, elem, attrs) {
+
+      scope.wavesurfer = WaveSurfer.create({
+        container: elem[0].getElementsByClassName('preview')[0],
+        waveColor: 'gray',
+        progressColor: 'purple',
+        barWidth: 5,
+        fillParent: true,
+        height: 80
+      });
+
+    },
     controller: ['$scope', '$sce', 'API', function($scope, $sce, API) {
 
       var createAudio = function (sampleRate, channelData, loop) {
@@ -230,7 +242,12 @@ app.directive('audioRecorder', function() {
         $scope.samples[idx] = createAudio(openStream.sampleRate, channels);
         $scope.combine();
 
-      }
+      };
+
+      $scope.createPreview = function(preview) {
+        $scope.preview = preview;
+        $scope.wavesurfer.load(preview.uri);
+      };
 
       $scope.combine = function() {
 
@@ -246,7 +263,7 @@ app.directive('audioRecorder', function() {
           return channels;
         });
 
-        $scope.preview = createAudio(sampleRate, combineChannels(channels));
+        $scope.createPreview(createAudio(sampleRate, combineChannels(channels)));
 
       };
 
@@ -296,7 +313,7 @@ app.directive('audioRecorder', function() {
       };
 
       $scope.getSampleLength = function(sample) {
-        return (sample.channels[0].length / sample.sampleRate).toFixed(2);
+        return !sample ? 0 : (sample.channels[0].length / sample.sampleRate).toFixed(2);
       };
 
       $scope.calculatePct = function(sample, samples) {
@@ -312,6 +329,10 @@ app.directive('audioRecorder', function() {
 
       $scope.play = function(sample) {
         sample.audio.play();
+      };
+
+      $scope.playPreview = function() {
+        $scope.wavesurfer.play();
       };
 
       $scope.publish = function(sample) {
