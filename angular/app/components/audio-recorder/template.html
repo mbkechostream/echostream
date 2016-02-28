@@ -2,19 +2,23 @@
   <md-toolbar>Audio Recorder</md-toolbar>
 
   <div layout="row">
-    <div flex="25"></div>
-    <md-button flex="25" class="md-primary" ng-click="startRecording()" ng-disabled="!!openStream">Record</md-button>
-    <md-button flex="25" class="md-primary" ng-click="stopRecording()" ng-disabled="!openStream">Stop</md-button>
-    <div flex="25"></div>
-  </div>
-
-  <div>
-    <input type="file">
+    <div flex="20"></div>
+    <md-button flex="20" class="md-primary" ng-click="startRecording()" ng-disabled="!!openStream">Record</md-button>
+    <md-button flex="20" class="md-primary" ng-click="stopRecording()" ng-disabled="!openStream">Stop</md-button>
+    <md-button
+      flex="20"
+      ngf-select="upload($file)"
+      ngf-pattern="'audio/wav'"
+      class="md-primary">
+      Upload
+    </md-button>
+    <div flex="20"></div>
   </div>
 
   <div ng-repeat="sample in samples">
     <md-checkbox ng-model="sample.selected"></md-checkbox>
     <audio src="{{ sample.uri }}" controls="true"></audio>
+    <md-checkbox ng-model="sample.loop"></md-checkbox> Loop
   </div>
 
   <md-button ng-click="combine()" ng-show="samples.length">Combine</md-button>

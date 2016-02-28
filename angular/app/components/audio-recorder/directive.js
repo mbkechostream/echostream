@@ -45,8 +45,6 @@ app.directive('audioRecorder', function() {
 
   var combineChannels = function (channelsArray) {
 
-    console.log('CHANNELS ARRAY', channelsArray);
-
     var max = 0;
     var index = 0;
     for (var i = 0; i < channelsArray.length; i++) {
@@ -56,14 +54,21 @@ app.directive('audioRecorder', function() {
       }
     }
 
-    return channelsArray[index].map(function(fromChannel, n) {
+    var fromArray = channelsArray.splice(index, 1)[0];
+
+    return fromArray.map(function(fromChannel, n) {
       var channel = new Int16Array(fromChannel.length);
       for (var i = 0; i < channel.length; i++) {
         var sum = fromChannel[i];
-        for (var j = 1; j < channelsArray.length; j++) {
-          sum += parseInt(channelsArray[j][n][i]) || 0;
+        for (var j = 0; j < channelsArray.length; j++) {
+          var curChan = channelsArray[j];
+          if (curChan.loop) {
+            sum += parseInt(curChan[n][i % curChan[n].length]) || 0;
+          } else {
+            sum += parseInt(curChan[n][i]) || 0;
+          }
         }
-        channel[i] = Math.round(sum / channelsArray.length);
+        channel[i] = Math.round(sum / (channelsArray.length + 1));
       }
       return channel;
     });
@@ -231,12 +236,58 @@ app.directive('audioRecorder', function() {
         if (samples.length < 1) {
           return;
         }
-        
+
         var sampleRate = samples[0].sampleRate;
-        var channels = samples.map(function(s) { return s.channels; });
-        console.log(channels);
-        console.log(combineChannels(channels));
+        var channels = samples.map(function(s) {
+          var channels = s.channels;
+          channels.loop = s.loop;
+          return channels;
+        });
         $scope.samples.push(createAudio(sampleRate, combineChannels(channels)));
+
+      };
+
+      $scope.upload = function($file) {
+
+        console.log($file);
+        var reader = new FileReader();
+        reader.onload = function() {
+
+          var buffer = reader.result;
+          var newBuffer;
+          var arr = new Uint8Array(buffer);
+          for (var i = 0; i < arr.length; i++) {
+            if (
+              arr[i] === 'd'.charCodeAt(0) &&
+              arr[i + 1] === 'a'.charCodeAt(0) &&
+              arr[i + 2] === 't'.charCodeAt(0) &&
+              arr[i + 3] === 'a'.charCodeAt(0)
+            ) {
+              newBuffer = buffer.slice(i + 4);
+              break;
+            }
+          }
+
+          if (!newBuffer) {
+            alert('Could not load file');
+          }
+
+          var data = new Int16Array(newBuffer);
+          var channels = [
+            new Int16Array(data.length >>> 1),
+            new Int16Array(data.length >>> 1)
+          ];
+
+          for (var i = 0; i < data.length; i += 2) {
+            channels[0][i >>> 1] = data[i];
+            channels[1][(i >>> 1) + 1] = data[i + 1];
+          }
+
+          $scope.samples.push(createAudio(44100, channels));
+          $scope.$apply();
+
+        };
+        reader.readAsArrayBuffer($file);
 
       };
 
