@@ -25,12 +25,13 @@
           {{ item.title }}
         </div>
       </div>
-      <img src="/static/images/icons/ContributeButton.png" class="show-tracks-button" ng-class="showTracklist" ng-click="hideTracklist=''; showTracklist='isHidden'">
+      <!--TODO(jacoblee): Animate this. <img src="/static/images/icons/ContributeButton.svg" class="show-tracks-button" ng-class="showTracklist" ng-click="hideTracklist=''; showTracklist='isHidden'">-->
+      <img src="/static/images/icons/ContributeButton.svg" class="show-tracks-button" ng-click="redirectToCreatePage()">
     </div>
     <div class="soundwave"></div>
     </div>
   </div>
-  <div class="hide-tracks-button" ng-class="hideTracklist" ng-click="hideTracklist='isHidden'; showTracklist=''">
+  <!--<div class="hide-tracks-button" ng-class="hideTracklist" ng-click="hideTracklist='isHidden'; showTracklist=''">
     Hide tracks
-  </div>
+  </div>-->
 </div>

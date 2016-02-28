@@ -12,11 +12,14 @@ app.directive('song', function() {
       });
       scope.wavesurfer.load('/static/sounds/imperial_march.wav');
     },
-    controller: ['$scope', function($scope) {
+    controller: ['$scope', '$window', function($scope, $window) {
       $scope.item = $scope.item();
       $scope.hideTracklist = 'isHidden';
       $scope.toggleTracklist = function() {
       	$scope.showTracks = !$scope.showTracks;
+      };
+      $scope.redirectToCreatePage = function() {
+        $window.location.href = '/create';
       };
       $scope.playSong = function() {
       	$scope.wavesurfer.play();
