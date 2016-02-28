@@ -82,7 +82,7 @@ app.directive('audioRecorder', function() {
       scope.wavesurfer = WaveSurfer.create({
         container: elem[0].getElementsByClassName('preview')[0],
         waveColor: 'gray',
-        progressColor: 'purple',
+        progressColor: '#a66dc3',
         barWidth: 2,
         fillParent: true,
         height: 80

@@ -8,7 +8,7 @@ app.directive('song', function() {
       scope.wavesurfer = WaveSurfer.create({
         container: elem[0].getElementsByClassName('soundwave')[0],
         waveColor: 'gray',
-        progressColor: 'purple',
+        progressColor: '#a66dc3',
         barWidth: 2,
       });
 
