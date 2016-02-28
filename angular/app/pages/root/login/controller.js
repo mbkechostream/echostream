@@ -1,4 +1,4 @@
-app.controller('RootLoginController', ['$scope', '$location', 'API', function($scope, $location, API) {
+app.controller('RootLoginController', ['$scope', '$window', 'API', function($scope, $window, API) {
 
   // This is called with the results from from FB.getLoginStatus().
   function statusChangeCallback(response) {
@@ -74,7 +74,7 @@ app.controller('RootLoginController', ['$scope', '$location', 'API', function($s
     console.log('Welcome!  Fetching your information.... ');
     FB.api('/me', function(response) {
       console.log('Successful login for: ' + response.name);
-      $location.url('/echoes');
+      $window.location.href = "/echoes";
     });
   }
 }]);
