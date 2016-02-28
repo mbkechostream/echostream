@@ -14,9 +14,12 @@
     -webkit-justify-content: center;
 
 	.logo{
+	  margin-top: -200px;
 	  display:block;
-	  width:25%;
-	  height:25%;
+	  width:auto;
+	  height:auto;
+	  max-width:25%;
+	  max-height:25%;
 	}
 
 	#fbPhoto {
@@ -24,6 +27,14 @@
 	}
 
 	.login {
+	  margin-top: 10px;
+	  text-color: #AB70C9;
+	  font-family: proxima-nova, sans-serif;;
+	  color: #ffffff;
+	  font-size: 12px;
+	}
+
+	#status {
 	  margin-top: 10px;
 	  text-color: #AB70C9;
 	  font-family: proxima-nova, sans-serif;;
