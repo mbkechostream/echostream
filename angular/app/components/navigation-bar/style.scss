@@ -1,5 +1,15 @@
 navigation-bar {
 
-  color: #000000;
+  .navbar-container {
+    background-color: #2b2b2b;
+    padding: 40px 50px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .logout-button {
+    height: 40px;
+    align-self: flex-end;
+  }
 
 }

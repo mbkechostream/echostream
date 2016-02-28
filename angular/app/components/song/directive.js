@@ -20,7 +20,12 @@ app.directive('song', function() {
       };
       $scope.playSong = function() {
       	$scope.wavesurfer.play();
-      }
+      	$scope.songPlaying = true;
+      };
+      $scope.pauseSong = function() {
+      	$scope.wavesurfer.pause();
+      	$scope.songPlaying = false;
+      };
     }]
   };
 

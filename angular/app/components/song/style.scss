@@ -4,7 +4,6 @@ song {
   .song-container {
     display: flex;
     margin: 20px;
-    font-family: "Proxima Nova", sans-serif;
     margin-bottom: 50px;
   }
 
@@ -26,13 +25,10 @@ song {
   }
 
   .show-tracks-button {
-    margin-top: 15px;
-    align-self: center;
     transition: all linear 0.5s;
-    line-height: 20px;
+    height: 30px;
+    align-self: center;
     opacity: 1;
-    padding: 10px;
-    border: 1px solid black;
   }
 
   .hide-tracks-button {
