@@ -1,3 +1,10 @@
+<div id="fb-root"></div>
 <div ng-controller="RootLoginController">
-  My New Page (RootLoginController)
+<!--
+  Below we include the Login Button social plugin. This button uses
+  the JavaScript SDK to present a graphical Login button that triggers
+  the FB.login() function when clicked.
+-->
+<fb:login-button scope="public_profile,email" ng-click="checkLoginState">
+</fb:login-button>
 </div>

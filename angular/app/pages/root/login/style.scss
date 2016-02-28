@@ -1,5 +1,15 @@
 [ng-controller="RootLoginController"] {
 
-  /* style your controller here */
+  	/* style your controller here */
+	    height:100%;
+	    display: flex;
+	    align-items: center;
+	    justify-content: center;
+	    display: -webkit-flex;
+	    -webkit-align-items: center;
+	    -webkit-justify-content: center;
+}
 
+navigation-bar {
+	display: none;
 }
