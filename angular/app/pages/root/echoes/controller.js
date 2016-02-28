@@ -1,10 +1,8 @@
 app.controller('RootEchoesController', ['$scope', 'API', function($scope, API) {
-
-  $scope.songs = [
-    {id: 1, title: "Hello"},
-    {id: 2, title: "Title"},
-    {id: 3, title: "text"},
-    {id: 4}
-  ];
+  
+  API.request('soundbites').index({}, function(error, response) {
+  	console.log(response.data);
+    $scope.songs = response.data;
+  });
 
 }]);

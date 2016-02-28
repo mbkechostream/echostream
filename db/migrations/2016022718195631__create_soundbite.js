@@ -14,7 +14,7 @@ module.exports = (function() {
     up() {
 
       return [
-        this.createTable("soundbites", [{"name":"user_id","type":"int"},{"name":"raw_data","type":"string"}])
+        this.createTable("soundbites", [{"name":"user_id","type":"int"},{"name":"raw_data","type":"string"},{"name":"title","type":"string"}])
       ];
 
     }

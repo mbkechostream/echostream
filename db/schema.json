@@ -43,6 +43,7 @@
         {"name": "id", "type": "serial", "properties": {"nullable":false,"primary_key":true,"auto_increment":true}},
         {"name": "user_id", "type": "int", "properties": {}},
         {"name": "raw_data", "type": "string", "properties": {}},
+        {"name": "title", "type": "string", "properties": {}},
         {"name": "created_at", "type": "datetime", "properties": {}},
         {"name": "updated_at", "type": "datetime", "properties": {}}
       ]
